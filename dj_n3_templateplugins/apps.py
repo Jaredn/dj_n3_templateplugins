@@ -6,7 +6,7 @@ import importlib
 from django.apps import AppConfig
 from django.conf import settings
 from dj_n3_templateplugins.plugin import TemplatePlugin
-from dj_n3_templateplugins.utils import get_plugin_class
+
 
 
 LOGGER = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class DjN3TemplatepluginsConfig(AppConfig):
         self.load_plugins()
 
     def load_plugins(self):
-        from .models import Plugin
+        from dj_n3_templateplugins.models import Plugin
         LOGGER.debug('loading plugins')
         directory = os.listdir(PLUGIN_DIR)
         LOGGER.debug('checking plugin_dir %s', PLUGIN_DIR)
