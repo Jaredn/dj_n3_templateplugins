@@ -48,10 +48,19 @@ How it works:
 
 End-Users of your app create a 'plugin', which is just a Python Class which requires two methods to be created:
 
-.get_context_data():  How the plugin adds extra data to your Views/Templates
-
-.render_html(): How the plugin uses the context (and any provided by your view) to return HTML code (Full Django Template
-syntax is allowed here!)
+.. code-block:: python
+    
+    # plugin.py
+    class Plugin(TemplatePlugin):
+    .get_context_data():  
+        # How the plugin adds extra data to your Views/Templates
+        return {'foo': 'some context'}
+        
+    .render_html(): 
+        # How the plugin uses the context (and any provided by your view) to return HTML code (Full Django Template
+        # syntax is allowed here!)
+        return '<p><b>I am HTML</b> and I can use my context like this: {{ plugins.plugin_name.context.foo }}</p>'
+    
 
 These plugins get placed in the configurable directory:
 
