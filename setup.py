@@ -5,7 +5,7 @@ import re
 import sys
 
 
-asdf = '0.1.0'
+asdf = '0.2.0'
 
 try:
     from setuptools import setup
