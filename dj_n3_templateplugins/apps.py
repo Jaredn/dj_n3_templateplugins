@@ -32,10 +32,15 @@ class DjN3TemplatepluginsConfig(AppConfig):
                 #todo: Cleaner way to do this.  I'd like to use utils.get_plugin_class() but since this is validation
                 #todo: we don't have an instance in our DB yet.  This violates DRY.
                 sys.path.append(PLUGIN_DIR)
-                pmod = importlib.import_module(name=f)
-                sys.path.pop()
+                try:
+                    pmod = importlib.import_module(name=f)
+                    PmodPlugin = pmod.Plugin
+                except Exception:
+                    LOGGER.info('%s could not be imported or did not contain a Plugin class', f)
+                    sys.path.pop()
+                    continue
 
-                if self.validate_plugin(pmod.Plugin):
+                if self.validate_plugin(PmodPlugin):
                     plugin, created = Plugin.objects.get_or_create(name=f, defaults={
                         'pythonpath': '/'.join(PLUGIN_DIR, f)
                     })
