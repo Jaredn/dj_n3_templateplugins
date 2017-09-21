@@ -35,21 +35,45 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
-Add django-n3-templateplugins's URL patterns:
+Features
+--------
+
+If you want to build an extensible platform, you may find the need to allow the developers that use your app to alter
+or add on to the functionality that you provide.  This django package attempts to add 'plugin' functionality to
+your django app.
+
+How it works:
+
+End-Users of your app create a 'plugin', which is just a Python Class which inherits from django-n3-template's
+TemplatePlugin.  This class requires two methods to be created:
+
+.get_context_data():  Which is how their plugin adds extra data to your Views/Templates
+
+.render_html(): Which uses their context (and any provided by your view) to return HTML code (Full Django Template
+syntax is allowed here!)
+
+You then use the provided decorator @load_plugins to decorate your views like this:
+.. code-block:: python
+
+    # views.py
+    @load_plugins
+    class SomeView(DetailView):
+        ...
+
+This decorator will set a class property called self.plugins which is a dictionary.  You then use this at any point
+in your code and make sure it gets into your template context.
+
+
+In your template you use django-n3-templateplugins provided templatetag to render the plugin's html, which looks
+something like this:
 
 .. code-block:: python
 
-    from dj_n3_templateplugins import urls as dj_n3_templateplugins_urls
-
-
-    urlpatterns = [
-        ...
-        url(r'^', include(dj_n3_templateplugins_urls)),
-        ...
-    ]
-
-Features
---------
+    # some_template.html
+    {% load render_plugin %}
+    {% for k, v in plugins.items %}
+        {% render_plugin v.plugin_pbject %}
+    {% endfor %}
 
 * TODO
 
