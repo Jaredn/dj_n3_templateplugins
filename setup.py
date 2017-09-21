@@ -4,6 +4,9 @@ import os
 import re
 import sys
 
+
+asdf = '0.1.0'
+
 try:
     from setuptools import setup
 except ImportError:
