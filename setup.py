@@ -55,6 +55,7 @@ setup(
     author='Jared Newell',
     author_email='jared.newell@gmail.com',
     url='https://github.com/Jaredn/dj-n3-templateplugins',
+    download_url='https://github.com/Jaredn/dj-n3-templateplugins/archive/0.2.0.tar.giz',
     packages=[
         'dj_n3_templateplugins',
     ],
@@ -62,7 +63,7 @@ setup(
     install_requires=[],
     license="MIT",
     zip_safe=False,
-    keywords='dj-n3-templateplugins',
+    keywords='dj-n3-templateplugins django plugins template templateplugin',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
