@@ -40,17 +40,26 @@ Features
 
 If you want to build an extensible platform, you may find the need to allow the developers that use your app to alter
 or add on to the functionality that you provide.  This django package attempts to add 'plugin' functionality to
-your django app.
+your django app.  
+
+To give an example of why I'm creating this... My company built an in-house django asset management system that we want to open-source, but there is a bunch of business-logic throughout the Templates and Views that wouldn't make sense in an open-sourced app.  So in order to open source our asset management system we needed to make our custom business-logic pluggable.  Plus, anyone that used our asset management system would probably want a similar feature for their own business logic.  
 
 How it works:
 
-End-Users of your app create a 'plugin', which is just a Python Class which inherits from django-n3-template's
-TemplatePlugin.  This class requires two methods to be created:
+End-Users of your app create a 'plugin', which is just a Python Class which requires two methods to be created:
 
-.get_context_data():  Which is how their plugin adds extra data to your Views/Templates
+.get_context_data():  How the plugin adds extra data to your Views/Templates
 
-.render_html(): Which uses their context (and any provided by your view) to return HTML code (Full Django Template
+.render_html(): How the plugin uses the context (and any provided by your view) to return HTML code (Full Django Template
 syntax is allowed here!)
+
+These plugins get placed in the configurable directory:
+
+.. code-block:: python
+
+    # settings.py
+    N3PLUGINS_PLUGIN_DIR = '/some/path/with/plugins'
+
 
 You then use the provided decorator @load_plugins to decorate your views like this:
 
@@ -61,10 +70,10 @@ You then use the provided decorator @load_plugins to decorate your views like th
     class SomeView(DetailView):
 
 This decorator will set a class property called self.plugins which is a dictionary.  You then use this at any point
-in your code and make sure it gets into your template context.
+in your view's code and make sure it gets added to the Context object that is passed in for Template rendering.
 
 
-In your template you use django-n3-templateplugins provided templatetag to render the plugin's html, which looks
+In your template you then use django-n3-templateplugins provided templatetag to render the plugin's html, which looks
 something like this:
 
 .. code-block:: python
@@ -74,6 +83,8 @@ something like this:
     {% for k, v in plugins.items %}
         {% render_plugin v.plugin_pbject %}
     {% endfor %}
+
+And that's it!  
 
 * TODO
 
