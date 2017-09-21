@@ -53,12 +53,12 @@ TemplatePlugin.  This class requires two methods to be created:
 syntax is allowed here!)
 
 You then use the provided decorator @load_plugins to decorate your views like this:
+
 .. code-block:: python
 
     # views.py
     @load_plugins
     class SomeView(DetailView):
-        ...
 
 This decorator will set a class property called self.plugins which is a dictionary.  You then use this at any point
 in your code and make sure it gets into your template context.
