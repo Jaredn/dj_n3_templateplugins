@@ -103,8 +103,8 @@ something like this:
 And that's it!
 
 * TODO
-* Note: This early implementation only works with class-based views (as we set a class property with a decorator.  This
-isn't possible with a function.
+* Note: This early implementation only works with class-based views (as we set a class property with a decorator. This
+isn't possible with a function).
 
 Running Tests
 -------------
