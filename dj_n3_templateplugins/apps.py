@@ -8,7 +8,6 @@ from django.conf import settings
 from dj_n3_templateplugins.plugin import TemplatePlugin
 
 
-
 LOGGER = logging.getLogger(__name__)
 PLUGIN_DIR = getattr(settings, 'N3PLUGINS_PLUGIN_DIR', 'plugins')
 
@@ -18,6 +17,7 @@ class DjN3TemplatepluginsConfig(AppConfig):
 
     def ready(self):
         super().ready()
+        print('TESTING')
         self.load_plugins()
 
     def load_plugins(self):
@@ -42,7 +42,7 @@ class DjN3TemplatepluginsConfig(AppConfig):
 
                 if self.validate_plugin(PmodPlugin):
                     plugin, created = Plugin.objects.get_or_create(name=f, defaults={
-                        'pythonpath': '/'.join(PLUGIN_DIR, f)
+                        'pythonpath': '/'.join([PLUGIN_DIR, f])
                     })
                     LOGGER.info('get_or_create, created: %s, plugin: %s:%s', created, plugin.name, plugin.status)
                 else:
