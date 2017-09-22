@@ -84,7 +84,7 @@ You then use the provided decorator @load_plugins to decorate your views like th
             context = super().get_context_data(**kwargs)
             context['plugins'] = self.plugins
             return context
-            
+
 This decorator will set a class property called self.plugins which is a dictionary.  You then use this at any point
 in your view's code and make sure it gets added to the Context object that is passed in for Template rendering.
 
@@ -103,6 +103,8 @@ something like this:
 And that's it!
 
 * TODO
+* Note: This early implementation only works with class-based views (as we set a class property with a decorator.  This
+isn't possible with a function.
 
 Running Tests
 -------------
